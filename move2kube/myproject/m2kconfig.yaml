@@ -1,0 +1,28 @@
+move2kube:
+  containerization:
+    types:
+      - ReuseDockerfile
+      - NewDockerfile
+  services:
+    extending:
+      enable: true
+      expose: true
+      urlpath: /extending
+    myproject:
+      enable: true
+      expose: true
+      urlpath: /myproject
+  sources:
+    types:
+      - Containerize
+      - Dockerfile
+  target:
+    artifacttype: Yamls
+    clustertype: Kubernetes
+    imageregistry:
+      logintype: No authentication
+      namespace: myproject
+      url: quay.io
+    ingress:
+      host: myproject.com
+      tls: ""

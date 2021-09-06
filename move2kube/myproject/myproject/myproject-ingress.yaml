@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  creationTimestamp: null
+  labels:
+    move2kube.konveyor.io/service: myproject
+  name: myproject
+spec:
+  rules:
+  - host: myproject.myproject.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: myproject
+            port:
+              name: port-8080
+        path: /myproject
+        pathType: Prefix
+      - backend:
+          service:
+            name: extending
+            port:
+              name: port-8080
+        path: /extending
+        pathType: Prefix
+status:
+  loadBalancer: {}

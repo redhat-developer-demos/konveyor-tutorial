@@ -1,0 +1,9 @@
+
+
+
+The services are accessible on the following paths:
+extending : http://myproject.myproject.com/extending
+myproject : http://myproject.myproject.com/myproject
+
+
+

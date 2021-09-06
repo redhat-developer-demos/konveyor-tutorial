@@ -1,0 +1,49 @@
+apiVersion: move2kube.konveyor.io/v1alpha1
+kind: Plan
+metadata:
+  name: myproject
+spec:
+  inputs:
+    rootDir: extending
+    services:
+      extending:
+        - serviceName: extending
+          serviceRelPath: /extending
+          image: extending:latest
+          translationType: Containerize
+          containerBuildType: NewDockerfile
+          sourceType:
+            - Directory
+          targetOptions:
+            - m2kassets/dockerfiles/javagradle
+          sourceArtifacts:
+            SourceCode:
+              - .
+          buildArtifacts:
+            SourceCode:
+              - .
+          updateContainerBuildPipeline: true
+          updateDeployPipeline: true
+      myproject:
+        - serviceName: myproject
+          serviceRelPath: /myproject
+          image: myproject:latest
+          translationType: Dockerfile
+          containerBuildType: ReuseDockerfile
+          sourceType:
+            - Directory
+          targetOptions:
+            - templates/Dockerfile
+          sourceArtifacts:
+            Dockerfile:
+              - templates/Dockerfile
+          buildArtifacts:
+            SourceCode:
+              - .
+          updateContainerBuildPipeline: true
+          updateDeployPipeline: true
+  outputs:
+    kubernetes:
+      artifactType: Yamls
+      targetCluster:
+        type: Kubernetes

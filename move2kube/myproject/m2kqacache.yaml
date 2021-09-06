@@ -1,0 +1,190 @@
+apiVersion: move2kube.konveyor.io/v1alpha1
+kind: QACache
+spec:
+  solutions:
+    - id: move2kube.sources.types
+      description: 'Select all source types that you are interested in:'
+      context:
+        - Services that don't support any of the source types you are interested in will be ignored.
+      solution:
+        type: MultiSelect
+        default:
+          - Containerize
+          - Dockerfile
+        options:
+          - Containerize
+          - Dockerfile
+        answer:
+          - Containerize
+          - Dockerfile
+      resolved: true
+    - id: move2kube.services.[].enable
+      description: 'Select all services that are needed:'
+      context:
+        - The services unselected here will be ignored.
+      solution:
+        type: MultiSelect
+        default:
+          - extending
+          - myproject
+        options:
+          - extending
+          - myproject
+        answer:
+          - extending
+          - myproject
+      resolved: true
+    - id: move2kube.containerization.types
+      description: 'Select all containerization modes that is of interest:'
+      context:
+        - Services that don't support any of the containerization techniques you are interested in will be ignored.
+      solution:
+        type: MultiSelect
+        default:
+          - ReuseDockerfile
+          - NewDockerfile
+        options:
+          - ReuseDockerfile
+          - NewDockerfile
+        answer:
+          - ReuseDockerfile
+          - NewDockerfile
+      resolved: true
+    - id: move2kube.target.artifacttype
+      description: 'Choose the artifact type:'
+      context:
+        - Yamls - Generate Kubernetes Yamls
+        - Helm - Generate Helm chart
+        - Knative - Create Knative artifacts
+      solution:
+        type: Select
+        default:
+          - Yamls
+        options:
+          - Yamls
+          - Helm
+          - Knative
+        answer:
+          - Yamls
+      resolved: true
+    - id: move2kube.target.clustertype
+      description: 'Choose the cluster type:'
+      context:
+        - Choose the cluster type you would like to target
+      solution:
+        type: Select
+        default:
+          - Kubernetes
+        options:
+          - Openshift
+          - AWS-EKS
+          - Azure-AKS
+          - GCP-GKE
+          - IBM-IKS
+          - IBM-Openshift
+          - Kubernetes
+        answer:
+          - Kubernetes
+      resolved: true
+    - id: move2kube.services.[].expose
+      description: 'Select all services that should be exposed:'
+      context:
+        - Exposed services will be reachable from outside the cluster.
+      solution:
+        type: MultiSelect
+        default:
+          - myproject
+          - extending
+        options:
+          - myproject
+          - extending
+        answer:
+          - myproject
+          - extending
+      resolved: true
+    - id: move2kube.services."myproject".urlpath
+      description: What URL/path should we expose the service myproject on?
+      context:
+        - 'By default we expose the service on /<service name>:'
+      solution:
+        type: Input
+        default:
+          - /myproject
+        answer:
+          - /myproject
+      resolved: true
+    - id: move2kube.services."extending".urlpath
+      description: What URL/path should we expose the service extending on?
+      context:
+        - 'By default we expose the service on /<service name>:'
+      solution:
+        type: Input
+        default:
+          - /extending
+        answer:
+          - /extending
+      resolved: true
+    - id: move2kube.target.imageregistry.url
+      description: 'Enter the name of the image registry : '
+      context:
+        - You can always change it later by changing the yamls.
+      solution:
+        type: Select
+        default:
+          - quay.io
+        options:
+          - Other (specify custom option)
+          - index.docker.io
+          - quay.io
+          - lordofthejars-docker-continuous_delivery.bintray.io
+        answer:
+          - quay.io
+      resolved: true
+    - id: move2kube.target.imageregistry.namespace
+      description: 'Enter the namespace where the new images are pushed : '
+      context:
+        - 'Ex : myproject'
+      solution:
+        type: Input
+        default:
+          - myproject
+        answer:
+          - myproject
+      resolved: true
+    - id: move2kube.target.imageregistry.logintype
+      description: '[quay.io] What type of container registry login do you want to use?'
+      context:
+        - Docker login from config mode, will use the default config from your local machine.
+      solution:
+        type: Select
+        default:
+          - No authentication
+        options:
+          - Use existing pull secret
+          - No authentication
+          - UserName/Password
+        answer:
+          - No authentication
+      resolved: true
+    - id: move2kube.target.ingress.host
+      description: Provide the ingress host domain
+      context:
+        - Ingress host domain is part of service URL
+      solution:
+        type: Input
+        default:
+          - myproject.com
+        answer:
+          - myproject.com
+      resolved: true
+    - id: move2kube.target.ingress.tls
+      description: Provide the TLS secret for ingress
+      context:
+        - Enter TLS secret name
+      solution:
+        type: Input
+        default:
+          - ""
+        answer:
+          - ""
+      resolved: true
