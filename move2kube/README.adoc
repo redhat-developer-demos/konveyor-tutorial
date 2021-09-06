@@ -1,8 +1,8 @@
 MOVE2KUBE_TAG='v0.2.0-alpha.3' bash <(curl https://raw.githubusercontent.com/konveyor/move2kube/main/scripts/install.sh)
 
 
- $ move2kube collect (optional)
-  $ move2kube plan -s src/
-  $ move2kube translate
+$ move2kube collect (optional)
+$ move2kube plan -s src/
+$ move2kube translate
 
   
